@@ -24,9 +24,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     
     //Lista de opciones para los ComboBox
-    String[]opcionesAlgoritmo = {"BURBUJA","SELECCION","INSERCION"};
-    String[]opcionesTipo = {"ASCENDENTE","DESCENDENTE"};
-    String[]opcionesVelocidad = {"MEDIA","LENTA","RAPIDA"};
+    
     
     //Titulos para la gráfica
     private String titulo1;
@@ -40,10 +38,6 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         this.setTitle("G-SORT");
         setLocationRelativeTo(null);
-       
-        listaVelocidad = new JComboBox(opcionesTipo);
-        listaAlgoritmos = new JComboBox(opcionesAlgoritmo);
-        listaTipo = new JComboBox(opcionesTipo);
     }
 
     /**
@@ -83,7 +77,7 @@ public class Inicio extends javax.swing.JFrame {
         listaVelocidad = new javax.swing.JComboBox<>();
         listaAlgoritmos = new javax.swing.JComboBox<>();
         listaTipo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        botonEjecutar = new javax.swing.JButton();
         etiquetaAlgoritmos = new javax.swing.JLabel();
         etiquetaTipo = new javax.swing.JLabel();
         contenedorGrafica = new javax.swing.JPanel();
@@ -171,7 +165,7 @@ public class Inicio extends javax.swing.JFrame {
         botonBuscar.setBackground(new java.awt.Color(40, 113, 173));
         botonBuscar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         botonBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        botonBuscar.setText("BUSCAR");
+        botonBuscar.setText("Buscar");
         botonBuscar.setBorderPainted(false);
         botonBuscar.setContentAreaFilled(false);
         botonBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -187,7 +181,7 @@ public class Inicio extends javax.swing.JFrame {
         botonCargar.setBackground(new java.awt.Color(40, 113, 173));
         botonCargar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         botonCargar.setForeground(new java.awt.Color(255, 255, 255));
-        botonCargar.setText("CARGAR");
+        botonCargar.setText("Cargar");
         botonCargar.setBorderPainted(false);
         botonCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonCargar.setOpaque(true);
@@ -205,8 +199,13 @@ public class Inicio extends javax.swing.JFrame {
         etiquetaRuta.setFont(new java.awt.Font("Work Sans", 0, 16)); // NOI18N
         etiquetaRuta.setText("Ruta de archivos");
 
+        cajaTituloGrafica.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 113, 173)), javax.swing.BorderFactory.createEmptyBorder(5, 7, 5, 5)));
+
         etiquetaTituloGrafica.setFont(new java.awt.Font("Work Sans", 0, 16)); // NOI18N
         etiquetaTituloGrafica.setText("Título de gráfica");
+
+        cajaRutaArchivos.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
+        cajaRutaArchivos.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 113, 173)), javax.swing.BorderFactory.createEmptyBorder(5, 7, 5, 5)));
 
         javax.swing.GroupLayout contenedorSuperiorCajasTextoLayout = new javax.swing.GroupLayout(contenedorSuperiorCajasTexto);
         contenedorSuperiorCajasTexto.setLayout(contenedorSuperiorCajasTextoLayout);
@@ -319,18 +318,20 @@ public class Inicio extends javax.swing.JFrame {
         etiquetaVelocidad.setText("Velocidad:");
 
         listaVelocidad.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MEDIA", "LENTA", "RAPIDA" }));
 
+        listaAlgoritmos.setBackground(new java.awt.Color(255, 255, 255));
         listaAlgoritmos.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaAlgoritmos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaAlgoritmos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BURBUJA", "SELECCION", "INSERCION" }));
+        listaAlgoritmos.setOpaque(true);
 
         listaTipo.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ASCENDENTE", "DESCENDENTE" }));
 
-        jButton1.setText("Ejecutar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonEjecutar.setText("Ejecutar");
+        botonEjecutar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonEjecutarActionPerformed(evt);
             }
         });
 
@@ -350,17 +351,17 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(contenedorOpcionesLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(contenedorOpcionesLayout.createSequentialGroup()
                         .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(etiquetaAlgoritmos, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listaAlgoritmos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                            .addComponent(listaTipo, 0, 0, Short.MAX_VALUE)
+                            .addComponent(listaAlgoritmos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(listaVelocidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(27, 27, 27))
             .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(contenedorOpcionesLayout.createSequentialGroup()
                     .addGap(21, 21, 21)
@@ -381,7 +382,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(listaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
             .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(contenedorOpcionesLayout.createSequentialGroup()
@@ -417,9 +418,9 @@ public class Inicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEjecutarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonEjecutarActionPerformed
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // TODO add your handling code here:
@@ -437,6 +438,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void botonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCargarActionPerformed
         // TODO add your handling code here:
+
         
         
         
@@ -500,6 +502,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel ContenedorSuperior;
     private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonCargar;
+    private javax.swing.JButton botonEjecutar;
     private javax.swing.JTextField cajaRutaArchivos;
     private javax.swing.JTextField cajaTituloGrafica;
     private javax.swing.JPanel contenedorCentral;
@@ -514,7 +517,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaTipo;
     private javax.swing.JLabel etiquetaTituloGrafica;
     private javax.swing.JLabel etiquetaVelocidad;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox<String> listaAlgoritmos;
