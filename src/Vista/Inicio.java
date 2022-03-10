@@ -5,13 +5,16 @@
  */
 package Vista;
 
+import Modelo.Datos;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -27,6 +30,7 @@ public class Inicio extends javax.swing.JFrame {
     
     
     //Titulos para la gráfica
+    String [] titulos;
     private String titulo1;
     private String titulo2;
     
@@ -425,7 +429,11 @@ public class Inicio extends javax.swing.JFrame {
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // TODO add your handling code here:
         fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new java.io.File("/Users/daniel/Desktop/USAC PRIMER SEMESTRE 2022/IPC 1/LABORATORIO/PRACTICAS/Practica_2"));
         
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV","csv");
+        
+        fileChooser.setFileFilter(filtro);
         int seleccion = fileChooser.showOpenDialog(this);
         
         if(seleccion == JFileChooser.APPROVE_OPTION){
@@ -439,17 +447,37 @@ public class Inicio extends javax.swing.JFrame {
     private void botonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCargarActionPerformed
         // TODO add your handling code here:
 
-        
-        
-        
-        
+        String[] datos = {"", ""};
         String rutaArchivo = cajaRutaArchivos.getText();
         String tituloGrafica = cajaTituloGrafica.getText();
         
         if((rutaArchivo != null && tituloGrafica != null) && (!"".equals(rutaArchivo) && !"".equals(tituloGrafica)) ){
             
+            int contador = 0;
             
-            try(FileReader fr = new FileReader(fichero)){
+            try{
+                BufferedReader bf = new BufferedReader(new FileReader(rutaArchivo));
+                String temp = "";
+                String bfRead;
+                while((bfRead = bf.readLine()) != null){ 
+                    if(contador == 0){
+                        titulos = bfRead.split(",");
+                        
+                    } else{
+                    datos = bfRead.split(",");
+                        
+                    Datos nuevoDato = new Datos(
+                            datos[0], Integer.parseInt(datos[1].trim()));
+                    
+                    Datos.ingresarDatos(nuevoDato);
+                    }
+                    contador++;
+                    
+                }
+                Datos.recorrerDatos();
+                System.out.println("El titulo1 es: "+ titulos[0]);
+                System.out.println("El titulo2 es: "+ titulos[1]);
+
                 
             }catch(IOException e){
                 
