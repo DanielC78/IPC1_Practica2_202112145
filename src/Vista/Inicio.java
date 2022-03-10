@@ -5,6 +5,14 @@
  */
 package Vista;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author daniel
@@ -14,10 +22,28 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form Inicio
      */
+    
+    //Lista de opciones para los ComboBox
+    String[]opcionesAlgoritmo = {"BURBUJA","SELECCION","INSERCION"};
+    String[]opcionesTipo = {"ASCENDENTE","DESCENDENTE"};
+    String[]opcionesVelocidad = {"MEDIA","LENTA","RAPIDA"};
+    
+    //Titulos para la gráfica
+    private String titulo1;
+    private String titulo2;
+    
+    //Lectores de archivos
+    JFileChooser fileChooser;
+    File fichero;
+    
     public Inicio() {
-        this.setTitle("G-SORT");
-        this.setLocationRelativeTo(null);;
         initComponents();
+        this.setTitle("G-SORT");
+        setLocationRelativeTo(null);
+       
+        listaVelocidad = new JComboBox(opcionesTipo);
+        listaAlgoritmos = new JComboBox(opcionesAlgoritmo);
+        listaTipo = new JComboBox(opcionesTipo);
     }
 
     /**
@@ -30,25 +56,404 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         contenedorCentral = new javax.swing.JPanel();
+        ContenedorSuperior = new javax.swing.JPanel();
+        relleno1Sup = new javax.swing.JPanel();
+        relleno2Sup = new javax.swing.JPanel();
+        relleno3Sup = new javax.swing.JPanel();
+        relleno4Sup = new javax.swing.JPanel();
+        contenedorCentralSuperior = new javax.swing.JPanel();
+        contenedorSuperiorBotones = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        botonBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        botonCargar = new javax.swing.JButton();
+        contenedorSuperiorCajasTexto = new javax.swing.JPanel();
+        etiquetaRuta = new javax.swing.JLabel();
+        cajaTituloGrafica = new javax.swing.JTextField();
+        etiquetaTituloGrafica = new javax.swing.JLabel();
+        cajaRutaArchivos = new javax.swing.JTextField();
+        ContenedorInferior = new javax.swing.JPanel();
+        relleno1Inf = new javax.swing.JPanel();
+        relleno2Inf = new javax.swing.JPanel();
+        relleno3Inf = new javax.swing.JPanel();
+        relleno4Inf = new javax.swing.JPanel();
+        contenedorCentralInferior = new javax.swing.JPanel();
+        contenedorOpciones = new javax.swing.JPanel();
+        etiquetaVelocidad = new javax.swing.JLabel();
+        listaVelocidad = new javax.swing.JComboBox<>();
+        listaAlgoritmos = new javax.swing.JComboBox<>();
+        listaTipo = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        etiquetaAlgoritmos = new javax.swing.JLabel();
+        etiquetaTipo = new javax.swing.JLabel();
+        contenedorGrafica = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout contenedorCentralLayout = new javax.swing.GroupLayout(contenedorCentral);
-        contenedorCentral.setLayout(contenedorCentralLayout);
-        contenedorCentralLayout.setHorizontalGroup(
-            contenedorCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
+        contenedorCentral.setBackground(new java.awt.Color(255, 255, 255));
+        contenedorCentral.setLayout(new java.awt.BorderLayout());
+
+        ContenedorSuperior.setBackground(new java.awt.Color(255, 255, 255));
+        ContenedorSuperior.setPreferredSize(new java.awt.Dimension(786, 250));
+        ContenedorSuperior.setLayout(new java.awt.BorderLayout());
+
+        relleno1Sup.setBackground(new java.awt.Color(255, 255, 255));
+        relleno1Sup.setPreferredSize(new java.awt.Dimension(50, 98));
+
+        javax.swing.GroupLayout relleno1SupLayout = new javax.swing.GroupLayout(relleno1Sup);
+        relleno1Sup.setLayout(relleno1SupLayout);
+        relleno1SupLayout.setHorizontalGroup(
+            relleno1SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
-        contenedorCentralLayout.setVerticalGroup(
-            contenedorCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+        relleno1SupLayout.setVerticalGroup(
+            relleno1SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
         );
 
-        getContentPane().add(contenedorCentral);
+        ContenedorSuperior.add(relleno1Sup, java.awt.BorderLayout.LINE_END);
+
+        relleno2Sup.setBackground(new java.awt.Color(255, 255, 255));
+        relleno2Sup.setPreferredSize(new java.awt.Dimension(1005, 20));
+
+        javax.swing.GroupLayout relleno2SupLayout = new javax.swing.GroupLayout(relleno2Sup);
+        relleno2Sup.setLayout(relleno2SupLayout);
+        relleno2SupLayout.setHorizontalGroup(
+            relleno2SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        relleno2SupLayout.setVerticalGroup(
+            relleno2SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        ContenedorSuperior.add(relleno2Sup, java.awt.BorderLayout.PAGE_START);
+
+        relleno3Sup.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout relleno3SupLayout = new javax.swing.GroupLayout(relleno3Sup);
+        relleno3Sup.setLayout(relleno3SupLayout);
+        relleno3SupLayout.setHorizontalGroup(
+            relleno3SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        relleno3SupLayout.setVerticalGroup(
+            relleno3SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
+        );
+
+        ContenedorSuperior.add(relleno3Sup, java.awt.BorderLayout.LINE_START);
+
+        relleno4Sup.setBackground(new java.awt.Color(255, 255, 255));
+        relleno4Sup.setPreferredSize(new java.awt.Dimension(1005, 40));
+
+        javax.swing.GroupLayout relleno4SupLayout = new javax.swing.GroupLayout(relleno4Sup);
+        relleno4Sup.setLayout(relleno4SupLayout);
+        relleno4SupLayout.setHorizontalGroup(
+            relleno4SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        relleno4SupLayout.setVerticalGroup(
+            relleno4SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        ContenedorSuperior.add(relleno4Sup, java.awt.BorderLayout.PAGE_END);
+
+        contenedorCentralSuperior.setLayout(new java.awt.BorderLayout());
+
+        contenedorSuperiorBotones.setBackground(new java.awt.Color(255, 255, 255));
+        contenedorSuperiorBotones.setPreferredSize(new java.awt.Dimension(200, 198));
+        contenedorSuperiorBotones.setSize(new java.awt.Dimension(300, 200));
+        contenedorSuperiorBotones.setLayout(new java.awt.GridLayout(4, 1));
+        contenedorSuperiorBotones.add(jLabel1);
+
+        botonBuscar.setBackground(new java.awt.Color(40, 113, 173));
+        botonBuscar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        botonBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        botonBuscar.setText("BUSCAR");
+        botonBuscar.setBorderPainted(false);
+        botonBuscar.setContentAreaFilled(false);
+        botonBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonBuscar.setOpaque(true);
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+        contenedorSuperiorBotones.add(botonBuscar);
+        contenedorSuperiorBotones.add(jLabel2);
+
+        botonCargar.setBackground(new java.awt.Color(40, 113, 173));
+        botonCargar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        botonCargar.setForeground(new java.awt.Color(255, 255, 255));
+        botonCargar.setText("CARGAR");
+        botonCargar.setBorderPainted(false);
+        botonCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonCargar.setOpaque(true);
+        botonCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCargarActionPerformed(evt);
+            }
+        });
+        contenedorSuperiorBotones.add(botonCargar);
+
+        contenedorCentralSuperior.add(contenedorSuperiorBotones, java.awt.BorderLayout.LINE_END);
+
+        contenedorSuperiorCajasTexto.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaRuta.setFont(new java.awt.Font("Work Sans", 0, 16)); // NOI18N
+        etiquetaRuta.setText("Ruta de archivos");
+
+        etiquetaTituloGrafica.setFont(new java.awt.Font("Work Sans", 0, 16)); // NOI18N
+        etiquetaTituloGrafica.setText("Título de gráfica");
+
+        javax.swing.GroupLayout contenedorSuperiorCajasTextoLayout = new javax.swing.GroupLayout(contenedorSuperiorCajasTexto);
+        contenedorSuperiorCajasTexto.setLayout(contenedorSuperiorCajasTextoLayout);
+        contenedorSuperiorCajasTextoLayout.setHorizontalGroup(
+            contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorSuperiorCajasTextoLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(etiquetaRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(etiquetaTituloGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cajaRutaArchivos, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                    .addComponent(cajaTituloGrafica))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+        contenedorSuperiorCajasTextoLayout.setVerticalGroup(
+            contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorSuperiorCajasTextoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(etiquetaRuta)
+                .addGap(18, 18, 18)
+                .addComponent(cajaRutaArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(etiquetaTituloGrafica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cajaTituloGrafica, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+        );
+
+        contenedorCentralSuperior.add(contenedorSuperiorCajasTexto, java.awt.BorderLayout.CENTER);
+
+        ContenedorSuperior.add(contenedorCentralSuperior, java.awt.BorderLayout.CENTER);
+
+        contenedorCentral.add(ContenedorSuperior, java.awt.BorderLayout.PAGE_START);
+
+        ContenedorInferior.setBackground(new java.awt.Color(255, 255, 255));
+        ContenedorInferior.setLayout(new java.awt.BorderLayout());
+
+        relleno1Inf.setBackground(new java.awt.Color(255, 255, 255));
+        relleno1Inf.setPreferredSize(new java.awt.Dimension(1084, 35));
+
+        javax.swing.GroupLayout relleno1InfLayout = new javax.swing.GroupLayout(relleno1Inf);
+        relleno1Inf.setLayout(relleno1InfLayout);
+        relleno1InfLayout.setHorizontalGroup(
+            relleno1InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        relleno1InfLayout.setVerticalGroup(
+            relleno1InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 35, Short.MAX_VALUE)
+        );
+
+        ContenedorInferior.add(relleno1Inf, java.awt.BorderLayout.PAGE_START);
+
+        relleno2Inf.setBackground(new java.awt.Color(255, 255, 255));
+        relleno2Inf.setPreferredSize(new java.awt.Dimension(85, 378));
+
+        javax.swing.GroupLayout relleno2InfLayout = new javax.swing.GroupLayout(relleno2Inf);
+        relleno2Inf.setLayout(relleno2InfLayout);
+        relleno2InfLayout.setHorizontalGroup(
+            relleno2InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 85, Short.MAX_VALUE)
+        );
+        relleno2InfLayout.setVerticalGroup(
+            relleno2InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 378, Short.MAX_VALUE)
+        );
+
+        ContenedorInferior.add(relleno2Inf, java.awt.BorderLayout.LINE_START);
+
+        relleno3Inf.setBackground(new java.awt.Color(255, 255, 255));
+        relleno3Inf.setPreferredSize(new java.awt.Dimension(50, 378));
+
+        javax.swing.GroupLayout relleno3InfLayout = new javax.swing.GroupLayout(relleno3Inf);
+        relleno3Inf.setLayout(relleno3InfLayout);
+        relleno3InfLayout.setHorizontalGroup(
+            relleno3InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        relleno3InfLayout.setVerticalGroup(
+            relleno3InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 378, Short.MAX_VALUE)
+        );
+
+        ContenedorInferior.add(relleno3Inf, java.awt.BorderLayout.LINE_END);
+
+        relleno4Inf.setBackground(new java.awt.Color(255, 255, 255));
+        relleno4Inf.setPreferredSize(new java.awt.Dimension(1084, 35));
+
+        javax.swing.GroupLayout relleno4InfLayout = new javax.swing.GroupLayout(relleno4Inf);
+        relleno4Inf.setLayout(relleno4InfLayout);
+        relleno4InfLayout.setHorizontalGroup(
+            relleno4InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        relleno4InfLayout.setVerticalGroup(
+            relleno4InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 35, Short.MAX_VALUE)
+        );
+
+        ContenedorInferior.add(relleno4Inf, java.awt.BorderLayout.PAGE_END);
+
+        contenedorCentralInferior.setBackground(new java.awt.Color(255, 255, 255));
+        contenedorCentralInferior.setLayout(new java.awt.BorderLayout(50, 0));
+
+        contenedorOpciones.setBackground(new java.awt.Color(255, 255, 255));
+        contenedorOpciones.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Panel de opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Work Sans", 0, 18))); // NOI18N
+        contenedorOpciones.setPreferredSize(new java.awt.Dimension(300, 363));
+
+        etiquetaVelocidad.setFont(new java.awt.Font("Work Sans", 0, 13)); // NOI18N
+        etiquetaVelocidad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        etiquetaVelocidad.setText("Velocidad:");
+
+        listaVelocidad.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
+        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        listaAlgoritmos.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
+        listaAlgoritmos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        listaTipo.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
+        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Ejecutar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        etiquetaAlgoritmos.setFont(new java.awt.Font("Work Sans", 0, 13)); // NOI18N
+        etiquetaAlgoritmos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        etiquetaAlgoritmos.setText("Algoritmo:");
+        etiquetaAlgoritmos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        etiquetaTipo.setFont(new java.awt.Font("Work Sans", 0, 13)); // NOI18N
+        etiquetaTipo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        etiquetaTipo.setText("Tipo:");
+
+        javax.swing.GroupLayout contenedorOpcionesLayout = new javax.swing.GroupLayout(contenedorOpciones);
+        contenedorOpciones.setLayout(contenedorOpcionesLayout);
+        contenedorOpcionesLayout.setHorizontalGroup(
+            contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorOpcionesLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contenedorOpcionesLayout.createSequentialGroup()
+                        .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etiquetaAlgoritmos, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(listaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(listaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(listaAlgoritmos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(contenedorOpcionesLayout.createSequentialGroup()
+                    .addGap(21, 21, 21)
+                    .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(174, Short.MAX_VALUE)))
+        );
+        contenedorOpcionesLayout.setVerticalGroup(
+            contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorOpcionesLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listaAlgoritmos, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                    .addComponent(etiquetaAlgoritmos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(listaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+            .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(contenedorOpcionesLayout.createSequentialGroup()
+                    .addGap(142, 142, 142)
+                    .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(175, Short.MAX_VALUE)))
+        );
+
+        contenedorCentralInferior.add(contenedorOpciones, java.awt.BorderLayout.LINE_START);
+
+        contenedorGrafica.setBackground(new java.awt.Color(255, 255, 255));
+        contenedorGrafica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gráfica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Work Sans", 0, 18))); // NOI18N
+
+        javax.swing.GroupLayout contenedorGraficaLayout = new javax.swing.GroupLayout(contenedorGrafica);
+        contenedorGrafica.setLayout(contenedorGraficaLayout);
+        contenedorGraficaLayout.setHorizontalGroup(
+            contenedorGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 613, Short.MAX_VALUE)
+        );
+        contenedorGraficaLayout.setVerticalGroup(
+            contenedorGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 348, Short.MAX_VALUE)
+        );
+
+        contenedorCentralInferior.add(contenedorGrafica, java.awt.BorderLayout.CENTER);
+
+        ContenedorInferior.add(contenedorCentralInferior, java.awt.BorderLayout.CENTER);
+
+        contenedorCentral.add(ContenedorInferior, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(contenedorCentral, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+        fileChooser = new JFileChooser();
+        
+        int seleccion = fileChooser.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION){
+            fichero = fileChooser.getSelectedFile();
+            
+            this.cajaRutaArchivos.setText(fichero.getAbsolutePath());
+        }
+        
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void botonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCargarActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        String rutaArchivo = cajaRutaArchivos.getText();
+        String tituloGrafica = cajaTituloGrafica.getText();
+        
+        if((rutaArchivo != null && tituloGrafica != null) && (!"".equals(rutaArchivo) && !"".equals(tituloGrafica)) ){
+            
+            
+            try(FileReader fr = new FileReader(fichero)){
+                
+            }catch(IOException e){
+                
+            }
+        }
+    }//GEN-LAST:event_botonCargarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,7 +494,39 @@ public class Inicio extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ContenedorInferior;
+    private javax.swing.JPanel ContenedorSuperior;
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonCargar;
+    private javax.swing.JTextField cajaRutaArchivos;
+    private javax.swing.JTextField cajaTituloGrafica;
     private javax.swing.JPanel contenedorCentral;
+    private javax.swing.JPanel contenedorCentralInferior;
+    private javax.swing.JPanel contenedorCentralSuperior;
+    private javax.swing.JPanel contenedorGrafica;
+    private javax.swing.JPanel contenedorOpciones;
+    private javax.swing.JPanel contenedorSuperiorBotones;
+    private javax.swing.JPanel contenedorSuperiorCajasTexto;
+    private javax.swing.JLabel etiquetaAlgoritmos;
+    private javax.swing.JLabel etiquetaRuta;
+    private javax.swing.JLabel etiquetaTipo;
+    private javax.swing.JLabel etiquetaTituloGrafica;
+    private javax.swing.JLabel etiquetaVelocidad;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> listaAlgoritmos;
+    private javax.swing.JComboBox<String> listaTipo;
+    private javax.swing.JComboBox<String> listaVelocidad;
+    private javax.swing.JPanel relleno1Inf;
+    private javax.swing.JPanel relleno1Sup;
+    private javax.swing.JPanel relleno2Inf;
+    private javax.swing.JPanel relleno2Sup;
+    private javax.swing.JPanel relleno3Inf;
+    private javax.swing.JPanel relleno3Sup;
+    private javax.swing.JPanel relleno4Inf;
+    private javax.swing.JPanel relleno4Sup;
     // End of variables declaration//GEN-END:variables
 }
