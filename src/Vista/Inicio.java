@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -424,6 +425,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void botonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEjecutarActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_botonEjecutarActionPerformed
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
@@ -474,10 +477,8 @@ public class Inicio extends javax.swing.JFrame {
                     contador++;
                     
                 }
-                Datos.recorrerDatos();
-                System.out.println("El titulo1 es: "+ titulos[0]);
-                System.out.println("El titulo2 es: "+ titulos[1]);
-
+                
+                DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
                 
             }catch(IOException e){
                 
