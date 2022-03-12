@@ -14,7 +14,13 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -175,6 +181,20 @@ public class Inicio extends javax.swing.JFrame {
         botonBuscar.setContentAreaFilled(false);
         botonBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonBuscar.setOpaque(true);
+        botonBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                botonBuscarMousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonBuscarMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonBuscarMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonBuscarMouseEntered(evt);
+            }
+        });
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
@@ -190,6 +210,20 @@ public class Inicio extends javax.swing.JFrame {
         botonCargar.setBorderPainted(false);
         botonCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonCargar.setOpaque(true);
+        botonCargar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                botonCargarMousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonCargarMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonCargarMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonCargarMouseEntered(evt);
+            }
+        });
         botonCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCargarActionPerformed(evt);
@@ -323,17 +357,26 @@ public class Inicio extends javax.swing.JFrame {
         etiquetaVelocidad.setText("Velocidad:");
 
         listaVelocidad.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MEDIA", "LENTA", "RAPIDA" }));
+        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Media", "Lenta", "Rápida" }));
+        listaVelocidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         listaAlgoritmos.setBackground(new java.awt.Color(255, 255, 255));
         listaAlgoritmos.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaAlgoritmos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BURBUJA", "SELECCION", "INSERCION" }));
+        listaAlgoritmos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Burbuja", "Selección", "Inserción" }));
+        listaAlgoritmos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listaAlgoritmos.setOpaque(true);
+        listaAlgoritmos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaAlgoritmosActionPerformed(evt);
+            }
+        });
 
         listaTipo.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ASCENDENTE", "DESCENDENTE" }));
+        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascendente", "Descendente", " " }));
+        listaTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         botonEjecutar.setText("Ejecutar");
+        botonEjecutar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonEjecutar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEjecutarActionPerformed(evt);
@@ -426,6 +469,13 @@ public class Inicio extends javax.swing.JFrame {
     private void botonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEjecutarActionPerformed
         // TODO add your handling code here:
         
+        String tipoAlgoritmo = (String) listaAlgoritmos.getSelectedItem();
+        String tipoOrden = (String) listaTipo.getSelectedItem();
+        String tipoVelocidad = (String) listaVelocidad.getSelectedItem();
+        System.out.println(tipoAlgoritmo);
+        new Ejecucion(tipoAlgoritmo,tipoOrden, tipoVelocidad).setVisible(true);
+        this.dispose();
+        
         
     }//GEN-LAST:event_botonEjecutarActionPerformed
 
@@ -464,7 +514,7 @@ public class Inicio extends javax.swing.JFrame {
                 String bfRead;
                 while((bfRead = bf.readLine()) != null){ 
                     if(contador == 0){
-                        titulos = bfRead.split(",");
+                        titulos = bfRead.trim().split(",");
                         
                     } else{
                     datos = bfRead.split(",");
@@ -474,17 +524,73 @@ public class Inicio extends javax.swing.JFrame {
                     
                     Datos.ingresarDatos(nuevoDato);
                     }
-                    contador++;
-                    
+                    contador++; 
                 }
                 
                 DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
                 
+                for(Datos dato: Datos.arregloDatos){
+                    if(dato != null){
+                        dataSet.addValue(dato.getDatoNumerico(), dato.getDatoTexto(), "Lunes");
+                    }
+            }
+                JFreeChart chart = ChartFactory.createBarChart(tituloGrafica, titulo1, titulo2, dataSet, PlotOrientation.VERTICAL, true,true,false);
+                
+                
+                ChartPanel panelDatos = new ChartPanel(chart);
+                contenedorGrafica.add(panelDatos);
+                
             }catch(IOException e){
                 
             }
+        } else{
+            JOptionPane.showMessageDialog(null, "Debe de llenar todos los campos","Alerta", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botonCargarActionPerformed
+
+    private void listaAlgoritmosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAlgoritmosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaAlgoritmosActionPerformed
+
+    private void botonBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarMouseEntered
+        // TODO add your handling code here:
+        efectoHoverEntrada(botonBuscar);
+    }//GEN-LAST:event_botonBuscarMouseEntered
+
+    private void botonBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarMouseExited
+        // TODO add your handling code here:
+        efectoHoverSalida(botonBuscar);
+    }//GEN-LAST:event_botonBuscarMouseExited
+
+    private void botonCargarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCargarMouseEntered
+        // TODO add your handling code here:
+        efectoHoverEntrada(botonCargar);
+    }//GEN-LAST:event_botonCargarMouseEntered
+
+    private void botonCargarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCargarMouseExited
+        // TODO add your handling code here:
+        efectoHoverSalida(botonCargar);
+    }//GEN-LAST:event_botonCargarMouseExited
+
+    private void botonBuscarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarMousePressed
+        // TODO add your handling code here:   
+        efectoPresionar(botonBuscar);
+    }//GEN-LAST:event_botonBuscarMousePressed
+
+    private void botonCargarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCargarMousePressed
+        // TODO add your handling code here:
+        efectoPresionar(botonCargar);
+    }//GEN-LAST:event_botonCargarMousePressed
+
+    private void botonBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarMouseClicked
+        // TODO add your handling code here:
+        efectoHoverSalida(botonBuscar);
+    }//GEN-LAST:event_botonBuscarMouseClicked
+
+    private void botonCargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCargarMouseClicked
+        // TODO add your handling code here:
+        efectoHoverSalida(botonCargar);
+    }//GEN-LAST:event_botonCargarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -519,6 +625,24 @@ public class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             }
         });
+    }
+    
+    private void efectoHoverEntrada(JButton boton){
+        boton.setForeground(new Color(47, 113, 173));
+        boton.setBackground(Color.white);
+        boton.setBorderPainted(true);
+        boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
+    }
+    
+    private void efectoHoverSalida(JButton boton){
+                boton.setForeground(Color.white);
+                boton.setBackground(new Color(47, 113, 173));
+                boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
+    }
+    
+    private void efectoPresionar(JButton boton){
+        boton.setBackground(new Color(232, 245, 255));
+        boton.setForeground(new java.awt.Color(47,113,173));
     }
 
     private void setLocationRelative(Object object) {

@@ -12,49 +12,40 @@ package Modelo;
 public class Datos {
     
     //Atributos de la clase
-    private String columna1;
-    private int columna2;
+    private String datoTexto;
+    private int datoNumerico;
     
     //Arreglo que guardará los datos
     public static Datos[] arregloDatos = new Datos[100];
     
     public Datos(String columna1, int columna2){
-        this.columna1 = columna1;
-        this.columna2 = columna2;
+        this.datoTexto = columna1;
+        this.datoNumerico = columna2;
     }
     
     public static void ingresarDatos(Datos nuevoDato){
         for(int i = 0; i < arregloDatos.length; i++){
             if(arregloDatos[i] == null){
                 arregloDatos[i] = nuevoDato;
-                return;
+                break;
             }
         }
     }
-    
-    public static void recorrerDatos(){
-        for (Datos arregloDato : arregloDatos) {
-            if (arregloDato != null) {
-                System.out.println("La clase es: " + arregloDato.getColumna1());
-                System.out.println("La nota es: " + arregloDato.getColumna2());
-            } 
-        }
-    }
 
-    public String getColumna1() {
-        return columna1;
+    public String getDatoTexto() {
+        return datoTexto;
     }
 
     public void setColumna1(String columna1) {
-        this.columna1 = columna1;
+        this.datoTexto = columna1;
     }
 
-    public int getColumna2() {
-        return columna2;
+    public int getDatoNumerico() {
+        return datoNumerico;
     }
 
-    public void setColumna2(int columna2) {
-        this.columna2 = columna2;
+    public void setDatoNumerico(int datoNumerico) {
+        this.datoNumerico = datoNumerico;
     }
     
     
