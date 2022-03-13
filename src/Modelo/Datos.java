@@ -23,12 +23,22 @@ public class Datos {
         this.datoNumerico = columna2;
     }
     
+    public Datos(){
+        
+    }
+    
     public static void ingresarDatos(Datos nuevoDato){
         for(int i = 0; i < arregloDatos.length; i++){
             if(arregloDatos[i] == null){
                 arregloDatos[i] = nuevoDato;
                 break;
             }
+        }
+    }
+    
+    public static void reinicarArreglo(){
+        for(int i = 0; i < arregloDatos.length; i++){
+                arregloDatos[i] = null;   
         }
     }
 

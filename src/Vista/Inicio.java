@@ -6,13 +6,12 @@
 package Vista;
 
 import Modelo.Datos;
-import java.awt.Color;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
@@ -38,9 +37,17 @@ public class Inicio extends javax.swing.JFrame {
     
     //Titulos para la gráfica
     String [] titulos;
-    private String titulo1;
-    private String titulo2;
+
+    //Titulos de los ejes principales
+    private String tituloGrafica;
+    private String rutaArchivo;
     
+    //Componentes de JFreeChart
+     DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+     ChartPanel panelDatos;
+     JFreeChart chart;
+     int contador = 0;
+     
     //Lectores de archivos
     JFileChooser fileChooser;
     File fichero;
@@ -49,6 +56,52 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         this.setTitle("G-SORT");
         setLocationRelativeTo(null);
+    }
+    
+    private void crearGrafico(){
+                for(Datos dato: Datos.arregloDatos){
+                    if(dato != null){
+                        dataSet.addValue(dato.getDatoNumerico(), dato.getDatoTexto(),dato.getDatoTexto());
+                    }
+            }
+                chart = ChartFactory.createBarChart(tituloGrafica, titulos[0], titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
+               
+                panelDatos = new ChartPanel(chart);
+                panelDatos.setMouseWheelEnabled(true);
+                contenedorGrafica.add(panelDatos, BorderLayout.CENTER);
+                contador++;
+                pack();
+                repaint();
+    }
+    
+    private void reiniciarGrafica(){
+        new Datos().reinicarArreglo();
+        dataSet.clear();
+        if(contador != 0){
+            contenedorGrafica.remove(panelDatos);
+        }
+        repaint();
+        pack();
+    }
+    
+    
+    //Efecto para los botones
+    private void efectoHoverEntrada(JButton boton){
+        boton.setForeground(new Color(47, 113, 173));
+        boton.setBackground(Color.white);
+        boton.setBorderPainted(true);
+        boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
+    }
+    
+    private void efectoHoverSalida(JButton boton){
+                boton.setForeground(Color.white);
+                boton.setBackground(new Color(47, 113, 173));
+                boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
+    }
+    
+    private void efectoPresionar(JButton boton){
+        boton.setBackground(new Color(232, 245, 255));
+        boton.setForeground(new java.awt.Color(47,113,173));
     }
 
     /**
@@ -103,13 +156,13 @@ public class Inicio extends javax.swing.JFrame {
         ContenedorSuperior.setLayout(new java.awt.BorderLayout());
 
         relleno1Sup.setBackground(new java.awt.Color(255, 255, 255));
-        relleno1Sup.setPreferredSize(new java.awt.Dimension(50, 98));
+        relleno1Sup.setPreferredSize(new java.awt.Dimension(15, 98));
 
         javax.swing.GroupLayout relleno1SupLayout = new javax.swing.GroupLayout(relleno1Sup);
         relleno1Sup.setLayout(relleno1SupLayout);
         relleno1SupLayout.setHorizontalGroup(
             relleno1SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
         relleno1SupLayout.setVerticalGroup(
             relleno1SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +178,7 @@ public class Inicio extends javax.swing.JFrame {
         relleno2Sup.setLayout(relleno2SupLayout);
         relleno2SupLayout.setHorizontalGroup(
             relleno2SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1084, Short.MAX_VALUE)
         );
         relleno2SupLayout.setVerticalGroup(
             relleno2SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +209,7 @@ public class Inicio extends javax.swing.JFrame {
         relleno4Sup.setLayout(relleno4SupLayout);
         relleno4SupLayout.setHorizontalGroup(
             relleno4SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1084, Short.MAX_VALUE)
         );
         relleno4SupLayout.setVerticalGroup(
             relleno4SupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,13 +304,15 @@ public class Inicio extends javax.swing.JFrame {
         contenedorSuperiorCajasTextoLayout.setHorizontalGroup(
             contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenedorSuperiorCajasTextoLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addContainerGap()
                 .addGroup(contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(contenedorSuperiorCajasTextoLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(etiquetaTituloGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(etiquetaRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(etiquetaTituloGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cajaRutaArchivos, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                    .addComponent(cajaRutaArchivos, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
                     .addComponent(cajaTituloGrafica))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         contenedorSuperiorCajasTextoLayout.setVerticalGroup(
             contenedorSuperiorCajasTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,49 +337,48 @@ public class Inicio extends javax.swing.JFrame {
         ContenedorInferior.setLayout(new java.awt.BorderLayout());
 
         relleno1Inf.setBackground(new java.awt.Color(255, 255, 255));
-        relleno1Inf.setPreferredSize(new java.awt.Dimension(1084, 35));
 
         javax.swing.GroupLayout relleno1InfLayout = new javax.swing.GroupLayout(relleno1Inf);
         relleno1Inf.setLayout(relleno1InfLayout);
         relleno1InfLayout.setHorizontalGroup(
             relleno1InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1084, Short.MAX_VALUE)
         );
         relleno1InfLayout.setVerticalGroup(
             relleno1InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
+            .addGap(0, 5, Short.MAX_VALUE)
         );
 
         ContenedorInferior.add(relleno1Inf, java.awt.BorderLayout.PAGE_START);
 
         relleno2Inf.setBackground(new java.awt.Color(255, 255, 255));
-        relleno2Inf.setPreferredSize(new java.awt.Dimension(85, 378));
+        relleno2Inf.setPreferredSize(new java.awt.Dimension(50, 378));
 
         javax.swing.GroupLayout relleno2InfLayout = new javax.swing.GroupLayout(relleno2Inf);
         relleno2Inf.setLayout(relleno2InfLayout);
         relleno2InfLayout.setHorizontalGroup(
             relleno2InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         relleno2InfLayout.setVerticalGroup(
             relleno2InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 408, Short.MAX_VALUE)
         );
 
         ContenedorInferior.add(relleno2Inf, java.awt.BorderLayout.LINE_START);
 
         relleno3Inf.setBackground(new java.awt.Color(255, 255, 255));
-        relleno3Inf.setPreferredSize(new java.awt.Dimension(50, 378));
+        relleno3Inf.setPreferredSize(new java.awt.Dimension(15, 378));
 
         javax.swing.GroupLayout relleno3InfLayout = new javax.swing.GroupLayout(relleno3Inf);
         relleno3Inf.setLayout(relleno3InfLayout);
         relleno3InfLayout.setHorizontalGroup(
             relleno3InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
         relleno3InfLayout.setVerticalGroup(
             relleno3InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 408, Short.MAX_VALUE)
         );
 
         ContenedorInferior.add(relleno3Inf, java.awt.BorderLayout.LINE_END);
@@ -336,7 +390,7 @@ public class Inicio extends javax.swing.JFrame {
         relleno4Inf.setLayout(relleno4InfLayout);
         relleno4InfLayout.setHorizontalGroup(
             relleno4InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1084, Short.MAX_VALUE)
         );
         relleno4InfLayout.setVerticalGroup(
             relleno4InfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,7 +456,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(botonEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(contenedorOpcionesLayout.createSequentialGroup()
                         .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(etiquetaAlgoritmos, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,36 +479,25 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(etiquetaAlgoritmos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(listaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(45, 45, 45)
                 .addComponent(botonEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
             .addGroup(contenedorOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(contenedorOpcionesLayout.createSequentialGroup()
                     .addGap(142, 142, 142)
                     .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(175, Short.MAX_VALUE)))
+                    .addContainerGap(205, Short.MAX_VALUE)))
         );
 
         contenedorCentralInferior.add(contenedorOpciones, java.awt.BorderLayout.LINE_START);
 
         contenedorGrafica.setBackground(new java.awt.Color(255, 255, 255));
         contenedorGrafica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gráfica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Work Sans", 0, 18))); // NOI18N
-
-        javax.swing.GroupLayout contenedorGraficaLayout = new javax.swing.GroupLayout(contenedorGrafica);
-        contenedorGrafica.setLayout(contenedorGraficaLayout);
-        contenedorGraficaLayout.setHorizontalGroup(
-            contenedorGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
-        );
-        contenedorGraficaLayout.setVerticalGroup(
-            contenedorGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
-        );
-
+        contenedorGrafica.setLayout(new java.awt.BorderLayout());
         contenedorCentralInferior.add(contenedorGrafica, java.awt.BorderLayout.CENTER);
 
         ContenedorInferior.add(contenedorCentralInferior, java.awt.BorderLayout.CENTER);
@@ -468,11 +511,9 @@ public class Inicio extends javax.swing.JFrame {
 
     private void botonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEjecutarActionPerformed
         // TODO add your handling code here:
-        
         String tipoAlgoritmo = (String) listaAlgoritmos.getSelectedItem();
         String tipoOrden = (String) listaTipo.getSelectedItem();
         String tipoVelocidad = (String) listaVelocidad.getSelectedItem();
-        System.out.println(tipoAlgoritmo);
         new Ejecucion(tipoAlgoritmo,tipoOrden, tipoVelocidad).setVisible(true);
         this.dispose();
         
@@ -500,10 +541,12 @@ public class Inicio extends javax.swing.JFrame {
     private void botonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCargarActionPerformed
         // TODO add your handling code here:
 
-        String[] datos = {"", ""};
-        String rutaArchivo = cajaRutaArchivos.getText();
-        String tituloGrafica = cajaTituloGrafica.getText();
+        reiniciarGrafica();
         
+        String[] datos = {"", ""};
+        rutaArchivo = cajaRutaArchivos.getText();
+        tituloGrafica = cajaTituloGrafica.getText();
+
         if((rutaArchivo != null && tituloGrafica != null) && (!"".equals(rutaArchivo) && !"".equals(tituloGrafica)) ){
             
             int contador = 0;
@@ -518,7 +561,7 @@ public class Inicio extends javax.swing.JFrame {
                         
                     } else{
                     datos = bfRead.split(",");
-                        
+
                     Datos nuevoDato = new Datos(
                             datos[0], Integer.parseInt(datos[1].trim()));
                     
@@ -527,18 +570,7 @@ public class Inicio extends javax.swing.JFrame {
                     contador++; 
                 }
                 
-                DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-                
-                for(Datos dato: Datos.arregloDatos){
-                    if(dato != null){
-                        dataSet.addValue(dato.getDatoNumerico(), dato.getDatoTexto(), "Lunes");
-                    }
-            }
-                JFreeChart chart = ChartFactory.createBarChart(tituloGrafica, titulo1, titulo2, dataSet, PlotOrientation.VERTICAL, true,true,false);
-                
-                
-                ChartPanel panelDatos = new ChartPanel(chart);
-                contenedorGrafica.add(panelDatos);
+                crearGrafico();
                 
             }catch(IOException e){
                 
@@ -625,24 +657,6 @@ public class Inicio extends javax.swing.JFrame {
                 new Inicio().setVisible(true);
             }
         });
-    }
-    
-    private void efectoHoverEntrada(JButton boton){
-        boton.setForeground(new Color(47, 113, 173));
-        boton.setBackground(Color.white);
-        boton.setBorderPainted(true);
-        boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
-    }
-    
-    private void efectoHoverSalida(JButton boton){
-                boton.setForeground(Color.white);
-                boton.setBackground(new Color(47, 113, 173));
-                boton.setBorder(new LineBorder(new Color(47, 113, 173), 3, true));
-    }
-    
-    private void efectoPresionar(JButton boton){
-        boton.setBackground(new Color(232, 245, 255));
-        boton.setForeground(new java.awt.Color(47,113,173));
     }
 
     private void setLocationRelative(Object object) {
