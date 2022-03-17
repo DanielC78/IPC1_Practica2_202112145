@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import Modelo.Cronometro;
+
 /**
  *
  * @author daniel
@@ -17,16 +19,26 @@ public class Ejecucion extends javax.swing.JFrame {
      * @param tipoOrdenamiento
      * @param tipoVelocidad
      */
+    
+    
+    public static boolean verificarOrdenamiento = true;
 
     public Ejecucion(String tipoAlgoritmo, String tipoOrdenamiento, String tipoVelocidad) {
-        System.out.println(tipoAlgoritmo);
-        System.out.println(tipoOrdenamiento);
-        System.out.println(tipoVelocidad);
         initComponents();
         mostrarAtributosOrdenamiento(tipoAlgoritmo,tipoOrdenamiento,tipoVelocidad);
+        iniciarCronometro();
         this.setLocationRelativeTo(null);
         this.setTitle("SIMULACIÓN");
+        
     }
+    
+    public Ejecucion(){
+    }
+    
+        private void iniciarCronometro(){
+        Cronometro cronometro = new Cronometro();
+        cronometro.start();
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,13 +231,14 @@ public class Ejecucion extends javax.swing.JFrame {
             contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenedorInformacionLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(etiquetaAlgoritmo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(etiquetaTipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(etiquetaAlgoritmo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel5)
+                        .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(113, 113, 113))
         );
 
@@ -261,12 +274,13 @@ public class Ejecucion extends javax.swing.JFrame {
         etiquetaVelocidad.setText(velocidad);
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorCronometro;
     private javax.swing.JPanel contenedorInformacion;
     private javax.swing.JLabel etiquetaAlgoritmo;
     private javax.swing.JLabel etiquetaPasos;
-    private javax.swing.JLabel etiquetaTiempo;
+    public static javax.swing.JLabel etiquetaTiempo;
     private javax.swing.JLabel etiquetaTipo;
     private javax.swing.JLabel etiquetaVelocidad;
     private javax.swing.JLabel jLabel1;

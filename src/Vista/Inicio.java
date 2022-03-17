@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Modelo.Cronometro;
 import Modelo.Datos;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -46,7 +47,6 @@ public class Inicio extends javax.swing.JFrame {
      DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
      ChartPanel panelDatos;
      JFreeChart chart;
-     int contador = 0;
      
     //Lectores de archivos
     JFileChooser fileChooser;
@@ -69,7 +69,6 @@ public class Inicio extends javax.swing.JFrame {
                 panelDatos = new ChartPanel(chart);
                 panelDatos.setMouseWheelEnabled(true);
                 contenedorGrafica.add(panelDatos, BorderLayout.CENTER);
-                contador++;
                 pack();
                 repaint();
     }
@@ -77,13 +76,9 @@ public class Inicio extends javax.swing.JFrame {
     private void reiniciarGrafica(){
         new Datos().reinicarArreglo();
         dataSet.clear();
-        if(contador != 0){
-            contenedorGrafica.remove(panelDatos);
-        }
         repaint();
         pack();
     }
-    
     
     //Efecto para los botones
     private void efectoHoverEntrada(JButton boton){
@@ -553,7 +548,6 @@ public class Inicio extends javax.swing.JFrame {
             
             try{
                 BufferedReader bf = new BufferedReader(new FileReader(rutaArchivo));
-                String temp = "";
                 String bfRead;
                 while((bfRead = bf.readLine()) != null){ 
                     if(contador == 0){
@@ -567,7 +561,7 @@ public class Inicio extends javax.swing.JFrame {
                     
                     Datos.ingresarDatos(nuevoDato);
                     }
-                    contador++; 
+                    contador++;
                 }
                 
                 crearGrafico();

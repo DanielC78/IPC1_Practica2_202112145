@@ -5,79 +5,58 @@
  */
 package Modelo;
 
-import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Vista.Ejecucion;
 
 /**
  *
  * @author daniel
  */
-public class Cronometro extends Observable implements Runnable{
-
-    private int minutos, segundos, milisegundos;
-
-    public Cronometro(int minutos, int segundos, int milisegundos) {
-        this.minutos = minutos;
-        this.segundos = segundos;
-        this.milisegundos = milisegundos;
+public class Cronometro extends Thread{
+        
+    private static int  minutos = 0, segundos = 0, milisegundos = 0;
+    
+    public Cronometro(){
+        
     }
     
-    
-    
-    @Override
-    public void run() {
-         //To change body of generated methods, choose Tools | Templates.
-         
-         String tiempo;
-         while(true){
-             
-             try {
-                 tiempo = "";
-                 
-                 if(minutos < 10){
-                     tiempo += "0" + minutos;
-                 } else{
-                     tiempo += minutos;
-                 }
-                 
-                 if(segundos < 10){
-                     
-                     tiempo += "0" + segundos;
-                     
-                 } else{
-                     tiempo += segundos;
-                 }
-                 
-                 if(milisegundos < 10){
-                     tiempo += "0"+milisegundos;
-                 } else{
-                     tiempo += milisegundos;
-                 }
-                 
-                 this.setChanged();
-                 this.notifyObservers();
-                 this.clearChanged();
-                 Thread.sleep(1000);
-                 
-                 milisegundos++;
-                 
-                 if(milisegundos == 1000){
-                     segundos++;
-                     milisegundos = 0;
-                     if(segundos == 60){
-                         segundos = 0;
-                         minutos++;
-                     }
-                 }
-                 
-                 
-                 
-             } catch (InterruptedException ex) {
-                 Logger.getLogger(Cronometro.class.getName()).log(Level.SEVERE, null, ex);
-             }
-             
-         }
+    public void run(){
+        try{
+            while(Ejecucion.verificarOrdenamiento){
+                comenzarCronometro();
+                Thread.sleep(1,777777);                
+            }
+            
+        }catch(Exception e){
+            System.out.println("Problemas con el cronómetro "+e.getMessage());
+        }
     }
+   
     
+    private void comenzarCronometro(){
+        //Comenzamos a aumentar los milisegundos
+        milisegundos+=2;
+        
+        /*
+            Un segundo tiene 1000 ms por lo que
+            cuando sea 1000, regresamos los ms a 
+            0 y sumamos 1 unidad a los segundos
+        */
+        if(milisegundos > 999){
+            milisegundos = 0;
+            segundos++;
+            
+            /*1 minuto tiene 59 s por lo que
+             cuando los segundos lleguen a 59
+             los reiniciamos y aumentamos 1
+             unidad a los minutos
+            */
+            if(segundos  > 59){
+                segundos = 0;
+                minutos++;
+            }
+        }
+        String reloj = minutos + ":" + segundos + ":" + milisegundos;
+        Ejecucion.etiquetaTiempo.setText(reloj);
+        
+    }
 }
