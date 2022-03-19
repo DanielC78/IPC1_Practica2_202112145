@@ -537,7 +537,7 @@ public class Inicio extends javax.swing.JFrame {
 
         reiniciarGrafica();
         
-        String[] datos = {"", ""};
+        String[] datos = {};
         rutaArchivo = cajaRutaArchivos.getText();
         tituloGrafica = cajaTituloGrafica.getText();
 

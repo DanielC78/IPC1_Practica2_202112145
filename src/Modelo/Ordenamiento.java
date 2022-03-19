@@ -25,9 +25,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class Ordenamiento extends Thread{
    
     //Creamos los elementos para crear la gráfica
-    DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-    ChartPanel panelDatos;
-    JFreeChart chart;
+    //DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+    //ChartPanel panelDatos;
+    //JFreeChart chart;
     
     //Atributos de ordenamiento
     public String algoritmo;
@@ -35,7 +35,7 @@ public class Ordenamiento extends Thread{
     public String velocidad;
     
     //Creamos el arreglo tipo datos
-    private final Datos [] arregloDatos = Datos.arregloDatos;
+    private final Datos [] arregloDatos= Datos.arregloDatos;
     private int contador;
     
     //Indice auxilicar para el ordenamiento del arrelgo
@@ -48,8 +48,8 @@ public class Ordenamiento extends Thread{
     
     //Tipos de algoritmos
     private final String burbuja = "Burbuja";
-    private final String seleccion = "Seleccion";
-    private final String insercion = "Insercion";
+    private final String seleccion = "Selección";
+    private final String insercion = "Inserción";
     
     //Tipo de velocidades
     private final String strRapido = "Rapida";
@@ -58,15 +58,14 @@ public class Ordenamiento extends Thread{
     
     //Velocidades en ms
     private int nVelocidad;
-    
-    
-    
+
     public Ordenamiento(String algoritmo, String tipo, String velocidad){
         this.algoritmo = algoritmo;
         this.tipo = tipo;
         this.velocidad = velocidad;
         establecerVelocidad();
     }
+    
     @Override
     public void run(){
         try{  
@@ -91,28 +90,28 @@ public class Ordenamiento extends Thread{
     */
     
     public void crearGrafico(){
-        rellenarDataSet();
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        JFreeChart chart;
+        rellenarDataSet(dataSet);
         chart = ChartFactory.createBarChart(Inicio.tituloGrafica, Inicio.titulos[0], Inicio.titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
-        panelDatos = new ChartPanel(chart);
+        ChartPanel panelDatos = new ChartPanel(chart);
         panelDatos.setMouseWheelEnabled(true);
         Ejecucion.panelGrafica.add(panelDatos,BorderLayout.CENTER);
         new Ejecucion().repaint();
         new Ejecucion().pack();
     }
     
-    public void rellenarDataSet(){
+    public void rellenarDataSet(DefaultCategoryDataset dataSet){
         switch(tipo){
             case descendente:
                 for (int i = (arregloDatos.length-1); i >= 0; i--) {
                     if(arregloDatos[i] != null){
                         dataSet.addValue(arregloDatos[i].getDatoNumerico(), arregloDatos[i].getDatoTexto(), arregloDatos[i].getDatoTexto());
-                        //System.out.print("Num: " +arregloDatos[i].getDatoNumerico());
-                        //System.out.println("Texto: " +arregloDatos[i].getDatoTexto());
                     }
                 }                
                 break;
             case ascendente:
-                for (int i = (arregloDatos.length-1); i >= 0; i--) {
+                for (int i = 0; i < arregloDatos.length; i ++) {
                     if(arregloDatos[i] != null){
                         dataSet.addValue(arregloDatos[i].getDatoNumerico(), arregloDatos[i].getDatoTexto(), arregloDatos[i].getDatoTexto());
                     }
@@ -120,12 +119,6 @@ public class Ordenamiento extends Thread{
                 break;
         }
     }
-    
-    private void reiniciarGrafica(){
-        dataSet.clear();
-    }
-    
-    
     /*
     Se crean los algorimtos de ordenamiento,
     recibiendo como parámetro el tipo de ordenamiento
@@ -151,48 +144,72 @@ public class Ordenamiento extends Thread{
             if(arregloDatos[i] != null){
                 for(int j = 0; j < (arregloDatos.length - 1); j++){
                     if(arregloDatos[j] != null && arregloDatos[j+1] != null){
+                        crearGrafico();
+                        contador++;
+                        Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
+                        try {
+                            Thread.sleep(nVelocidad);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                         if(arregloDatos[j].getDatoNumerico() > arregloDatos[j+1].getDatoNumerico()){
-                            try {
-                                reiniciarGrafica();
                                 auxiliar = arregloDatos[j];
                                 arregloDatos[j] = arregloDatos[j+1];
                                 arregloDatos[j+1] = auxiliar;
-                                Thread.sleep(nVelocidad);
-                                contador++;
-                                Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
-                                crearGrafico();
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            
                         }
                     }
                 }
             }
-        }
-        //crearGrafico();
+        }        
     }
     
     public void metodoSeleccion(){
+        for (int i = 0; i < (arregloDatos.length-1); i++) {
+            try {
+                int minimo = i;
+                for (int j = 0; j < arregloDatos.length; j++) {
+                    if(arregloDatos[j].getDatoNumerico() < arregloDatos[minimo].getDatoNumerico()){
+                        minimo = j;
+                    }
+                }
+                auxiliar = arregloDatos[i];
+                arregloDatos[i] = arregloDatos[minimo];
+                arregloDatos[minimo] = auxiliar;
+                Thread.sleep(nVelocidad);
+                contador++;
+                Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
+                crearGrafico();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
     }
     
     public void metodoInsercion(){
         for(int i = 0; i < arregloDatos.length - 1; i++){
-            pos = i;
-            auxiliar = arregloDatos[i];
-            
-            while((pos > 0) && (arregloDatos[pos-1].getDatoNumerico() > auxiliar.getDatoNumerico())){
-                arregloDatos[pos] = arregloDatos[pos-1];
-                pos--;
+            try {
+                pos = i;
+                auxiliar = arregloDatos[i];
+                
+                while((pos > 0) && (arregloDatos[pos-1].getDatoNumerico() > auxiliar.getDatoNumerico())){
+                    arregloDatos[pos] = arregloDatos[pos-1];
+                    pos--;
+                }
+                
+                arregloDatos[pos] = auxiliar;
+                Thread.sleep(nVelocidad);
+                contador++;
+                Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
+                crearGrafico();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
             }
-            arregloDatos[pos] = auxiliar;
         }
     }
     
-    public void imprimirArreglo(){ 
-    String imp = "";
-    
+    public void imprimirArreglo(){     
         for(Datos datos: arregloDatos){
             if(datos != null){
                 System.out.print(datos.getDatoNumerico()+",");

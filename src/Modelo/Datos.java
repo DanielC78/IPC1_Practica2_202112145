@@ -16,7 +16,7 @@ public class Datos {
     private int datoNumerico;
     
     //Arreglo que guardará los datos
-    public static Datos[] arregloDatos = new Datos[100];
+    public static Datos[] arregloDatos = new Datos[75];
     
     public Datos(String datoTexto, int datoNumerico){
         this.datoTexto = datoTexto;
