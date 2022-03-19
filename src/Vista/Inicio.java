@@ -142,6 +142,7 @@ public class Inicio extends javax.swing.JFrame {
         contenedorGrafica = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1100, 750));
 
         contenedorCentral.setBackground(new java.awt.Color(255, 255, 255));
         contenedorCentral.setLayout(new java.awt.BorderLayout());
