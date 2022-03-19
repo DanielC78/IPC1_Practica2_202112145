@@ -34,8 +34,8 @@ public class Ejecucion extends javax.swing.JFrame {
         this.tipoVelocidad = tipoVelocidad;
         initComponents();
         iniciarCronometro();
-        iniciarOrdenamiento();
         mostrarAtributosOrdenamiento();
+        iniciarOrdenamiento();
         this.setLocationRelativeTo(null);
         this.setTitle("SIMULACIÓN");
         
@@ -126,7 +126,7 @@ public class Ejecucion extends javax.swing.JFrame {
         relleno1.setLayout(relleno1Layout);
         relleno1Layout.setHorizontalGroup(
             relleno1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1093, Short.MAX_VALUE)
+            .addGap(0, 1206, Short.MAX_VALUE)
         );
         relleno1Layout.setVerticalGroup(
             relleno1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +158,7 @@ public class Ejecucion extends javax.swing.JFrame {
         relleno3.setLayout(relleno3Layout);
         relleno3Layout.setHorizontalGroup(
             relleno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1093, Short.MAX_VALUE)
+            .addGap(0, 1206, Short.MAX_VALUE)
         );
         relleno3Layout.setVerticalGroup(
             relleno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,12 +268,12 @@ public class Ejecucion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                .addGap(22, 22, 22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addContainerGap())
         );
         contenedorInformacionLayout.setVerticalGroup(
             contenedorInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,17 +294,7 @@ public class Ejecucion extends javax.swing.JFrame {
 
         panelCentral.add(panelSuperior, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout panelGraficaLayout = new javax.swing.GroupLayout(panelGrafica);
-        panelGrafica.setLayout(panelGraficaLayout);
-        panelGraficaLayout.setHorizontalGroup(
-            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1043, Short.MAX_VALUE)
-        );
-        panelGraficaLayout.setVerticalGroup(
-            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
-        );
-
+        panelGrafica.setLayout(new java.awt.BorderLayout());
         panelCentral.add(panelGrafica, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(panelCentral, java.awt.BorderLayout.CENTER);

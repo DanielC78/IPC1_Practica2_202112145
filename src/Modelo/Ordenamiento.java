@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -66,15 +67,12 @@ public class Ordenamiento extends Thread{
         this.velocidad = velocidad;
         establecerVelocidad();
     }
-    
+    @Override
     public void run(){
         try{  
             switch(algoritmo){
                 case burbuja:
-                    for (int i = 0; i < (arregloDatos.length - 1); i++) {
-                        metodoBurbuja(i);
-                        Thread.sleep(nVelocidad);
-                    }
+                    metodoBurbuja();
                     break;
                 case seleccion:
                     metodoSeleccion();
@@ -83,7 +81,6 @@ public class Ordenamiento extends Thread{
                     metodoInsercion();
                     break;
             }
-            
             Ejecucion.verificarOrdenamiento = false;
         }catch(Exception e){
             System.out.println("Problemas con el ordenamiento "+e.getMessage());
@@ -94,35 +91,38 @@ public class Ordenamiento extends Thread{
     */
     
     public void crearGrafico(){
-        rellenarDataSet(arregloDatos);
+        rellenarDataSet();
         chart = ChartFactory.createBarChart(Inicio.tituloGrafica, Inicio.titulos[0], Inicio.titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
         panelDatos = new ChartPanel(chart);
         panelDatos.setMouseWheelEnabled(true);
-        panelDatos.setPreferredSize(new Dimension(100,100));
-        Ejecucion.panelGrafica.add(panelDatos, BorderLayout.CENTER);
+        Ejecucion.panelGrafica.add(panelDatos,BorderLayout.CENTER);
         new Ejecucion().repaint();
         new Ejecucion().pack();
     }
     
-    public void rellenarDataSet(Datos[] arreglo){
+    public void rellenarDataSet(){
         switch(tipo){
             case descendente:
-                for (int i = (arreglo.length-1); i >= 0; i--) {
-                    if(arreglo[i] != null){
-                        dataSet.addValue(arreglo[i].getDatoNumerico(), arreglo[i].getDatoTexto(), arreglo[i].getDatoTexto());
-                        System.out.print("Num: " +arreglo[i].getDatoNumerico());
-                        System.out.println("Texto: " +arreglo[i].getDatoTexto());
+                for (int i = (arregloDatos.length-1); i >= 0; i--) {
+                    if(arregloDatos[i] != null){
+                        dataSet.addValue(arregloDatos[i].getDatoNumerico(), arregloDatos[i].getDatoTexto(), arregloDatos[i].getDatoTexto());
+                        //System.out.print("Num: " +arregloDatos[i].getDatoNumerico());
+                        //System.out.println("Texto: " +arregloDatos[i].getDatoTexto());
                     }
                 }                
                 break;
             case ascendente:
-                for (int i = (arreglo.length-1); i >= 0; i--) {
-                    if(arreglo[i] != null){
-                        dataSet.addValue(arreglo[i].getDatoNumerico(), arreglo[i].getDatoTexto(), arreglo[i].getDatoTexto());
+                for (int i = (arregloDatos.length-1); i >= 0; i--) {
+                    if(arregloDatos[i] != null){
+                        dataSet.addValue(arregloDatos[i].getDatoNumerico(), arregloDatos[i].getDatoTexto(), arregloDatos[i].getDatoTexto());
                     }
                 }
                 break;
         }
+    }
+    
+    private void reiniciarGrafica(){
+        dataSet.clear();
     }
     
     
@@ -146,22 +146,31 @@ public class Ordenamiento extends Thread{
         }
     }
     
-    public void metodoBurbuja(int i){
-        System.out.println("Si llega");
+    public void metodoBurbuja(){
+        for (int i = 0; i < (arregloDatos.length - 1); i++) {
             if(arregloDatos[i] != null){
                 for(int j = 0; j < (arregloDatos.length - 1); j++){
                     if(arregloDatos[j] != null && arregloDatos[j+1] != null){
                         if(arregloDatos[j].getDatoNumerico() > arregloDatos[j+1].getDatoNumerico()){
+                            try {
+                                reiniciarGrafica();
                                 auxiliar = arregloDatos[j];
                                 arregloDatos[j] = arregloDatos[j+1];
                                 arregloDatos[j+1] = auxiliar;
-                                //crearGrafico();
+                                Thread.sleep(nVelocidad);
+                                contador++;
+                                Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
+                                crearGrafico();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             
                         }
                     }
                 }
             }
-        
+        }
+        //crearGrafico();
     }
     
     public void metodoSeleccion(){
@@ -180,4 +189,16 @@ public class Ordenamiento extends Thread{
             arregloDatos[pos] = auxiliar;
         }
     }
+    
+    public void imprimirArreglo(){ 
+    String imp = "";
+    
+        for(Datos datos: arregloDatos){
+            if(datos != null){
+                System.out.print(datos.getDatoNumerico()+",");
+            }
+        }
+        System.out.println("");
+    }
+    
 }

@@ -421,7 +421,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         listaTipo.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascendente", "Descendente", " " }));
+        listaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascendente", "Descendente" }));
         listaTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         botonEjecutar.setText("Ejecutar");
