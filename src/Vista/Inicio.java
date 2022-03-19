@@ -37,7 +37,9 @@ public class Inicio extends javax.swing.JFrame {
     
     
     //Titulos para la gráfica
-    public static String [] titulos;
+    public static String[] titulos;
+    private static String[] datosTemporales;
+    public static Datos[] arregloDatos;
 
     //Titulos de los ejes principales
     public static String tituloGrafica;
@@ -59,7 +61,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     private void crearGrafico(){
-                for(Datos dato: Datos.arregloDatos){
+                for(Datos dato: arregloDatos){
                     if(dato != null){
                         dataSet.addValue(dato.getDatoNumerico(), dato.getDatoTexto(),dato.getDatoTexto());
                     }
@@ -74,7 +76,6 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     private void reiniciarGrafica(){
-        new Datos().reiniciarArreglo();
         dataSet.clear();
         repaint();
         pack();
@@ -537,33 +538,31 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         reiniciarGrafica();
-        
-        String[] datos = {};
+        String linea = "";
         rutaArchivo = cajaRutaArchivos.getText();
         tituloGrafica = cajaTituloGrafica.getText();
 
         if((rutaArchivo != null && tituloGrafica != null) && (!"".equals(rutaArchivo) && !"".equals(tituloGrafica)) ){
             botonEjecutar.setEnabled(true);
-            int contador = 0;
             
             try{
                 BufferedReader bf = new BufferedReader(new FileReader(rutaArchivo));
                 String bfRead;
                 while((bfRead = bf.readLine()) != null){ 
-                    if(contador == 0){
-                        titulos = bfRead.trim().split(",");
-                        
-                    } else{
-                    datos = bfRead.split(",");
-
-                    Datos nuevoDato = new Datos(
-                            datos[0], Integer.parseInt(datos[1].trim()));
-                    
-                    Datos.ingresarDatos(nuevoDato);
-                    }
-                    contador++;
+                    linea += bfRead + "\n";
                 }
                 
+                datosTemporales = linea.split("\n");
+                titulos = datosTemporales[0].trim().split(",");
+                arregloDatos = new Datos[(datosTemporales.length-1)];
+                
+                for (int i = 0; i < arregloDatos.length; i++) {
+                    String[] contenidoTabla;
+                    if((i+1) != datosTemporales.length){
+                        contenidoTabla = datosTemporales[i+1].trim().split(",");
+                        arregloDatos[i] = new Datos(contenidoTabla[0], Integer.parseInt(contenidoTabla[1].trim()));
+                    }
+                }
                 crearGrafico();
                 
             }catch(IOException e){

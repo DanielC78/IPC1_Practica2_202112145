@@ -33,7 +33,7 @@ public class Ordenamiento extends Thread{
     public String velocidad;
     
     //Creamos el arreglo tipo datos
-    private final Datos [] arregloDatos = new Datos[Datos.datosReales];
+    private final Datos [] arregloDatos = Inicio.arregloDatos;
     private int contador;
     
     //Indice auxilicar para el ordenamiento del arrelgo
@@ -60,9 +60,7 @@ public class Ordenamiento extends Thread{
         this.algoritmo = algoritmo;
         this.tipo = tipo;
         this.velocidad = velocidad;
-        llenarArreglo();
         establecerVelocidad();
-        imprimirArreglo();
     }
     
     @Override
@@ -79,7 +77,6 @@ public class Ordenamiento extends Thread{
                     metodoInsercion();
                     break;
             }
-            Ejecucion.verificarOrdenamiento = false;
         }catch(Exception e){
             System.out.println("Problemas con el ordenamiento "+e.getMessage());
         }
@@ -158,6 +155,7 @@ public class Ordenamiento extends Thread{
             }
         }
         crearGrafico();
+        Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoSeleccion(){
@@ -183,6 +181,7 @@ public class Ordenamiento extends Thread{
                 arregloDatos[pos] = tmp;
         }  
         crearGrafico();
+        Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoInsercion(){
@@ -202,27 +201,11 @@ public class Ordenamiento extends Thread{
                 mostrarPasos();
         }
         crearGrafico();
+        Ejecucion.verificarOrdenamiento = false;
     }
     
     private void mostrarPasos(){
         contador++;
         Ejecucion.etiquetaPasos.setText(String.valueOf(contador));
-    }
-    
-    private void llenarArreglo(){
-        for (int i = 0; i < arregloDatos.length; i++) {
-            arregloDatos[i] = Datos.arregloDatos[i];
-        }
-    } 
-    
-    public void imprimirArreglo(){     
-        for(Datos datos: arregloDatos){
-            if(datos != null){
-                System.out.print(datos.getDatoNumerico()+",");
-            } else{
-                System.out.println("Hay null");
-            }
-        }
-        System.out.println("");
     }
 }

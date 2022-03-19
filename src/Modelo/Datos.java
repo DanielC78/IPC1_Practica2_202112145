@@ -15,10 +15,6 @@ public class Datos {
     private String datoTexto;
     private int datoNumerico;
     
-    //Arreglo que guardará los datos
-    public static Datos[] arregloDatos = new Datos[75];
-    public static int datosReales = 0;
-    
     public Datos(String datoTexto, int datoNumerico){
         this.datoTexto = datoTexto;
         this.datoNumerico = datoNumerico;
@@ -26,22 +22,6 @@ public class Datos {
     
     public Datos(){
         
-    }
-    
-    public static void ingresarDatos(Datos nuevoDato){
-        for(int i = 0; i < arregloDatos.length; i++){
-            if(arregloDatos[i] == null){
-                arregloDatos[i] = nuevoDato;
-                datosReales++;
-                break;
-            }
-        }
-    }
-    
-    public static void reiniciarArreglo(){
-        for(int i = 0; i < arregloDatos.length; i++){
-                arregloDatos[i] = null;   
-        }
     }
 
     public String getDatoTexto() {
