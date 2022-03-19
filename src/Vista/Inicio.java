@@ -37,11 +37,11 @@ public class Inicio extends javax.swing.JFrame {
     
     
     //Titulos para la gráfica
-    String [] titulos;
+    public static String [] titulos;
 
     //Titulos de los ejes principales
-    private String tituloGrafica;
-    private String rutaArchivo;
+    public static String tituloGrafica;
+    private static String rutaArchivo;
     
     //Componentes de JFreeChart
      DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -63,7 +63,7 @@ public class Inicio extends javax.swing.JFrame {
                     if(dato != null){
                         dataSet.addValue(dato.getDatoNumerico(), dato.getDatoTexto(),dato.getDatoTexto());
                     }
-            }
+                }
                 chart = ChartFactory.createBarChart(tituloGrafica, titulos[0], titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
                
                 panelDatos = new ChartPanel(chart);
@@ -74,7 +74,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     private void reiniciarGrafica(){
-        new Datos().reinicarArreglo();
+        new Datos().reiniciarArreglo();
         dataSet.clear();
         repaint();
         pack();
@@ -406,7 +406,7 @@ public class Inicio extends javax.swing.JFrame {
         etiquetaVelocidad.setText("Velocidad:");
 
         listaVelocidad.setFont(new java.awt.Font("Work Sans", 0, 14)); // NOI18N
-        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Media", "Lenta", "Rápida" }));
+        listaVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Media", "Lenta", "Rapida" }));
         listaVelocidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         listaAlgoritmos.setBackground(new java.awt.Color(255, 255, 255));
@@ -426,6 +426,7 @@ public class Inicio extends javax.swing.JFrame {
 
         botonEjecutar.setText("Ejecutar");
         botonEjecutar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonEjecutar.setEnabled(false);
         botonEjecutar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEjecutarActionPerformed(evt);
@@ -511,8 +512,6 @@ public class Inicio extends javax.swing.JFrame {
         String tipoVelocidad = (String) listaVelocidad.getSelectedItem();
         new Ejecucion(tipoAlgoritmo,tipoOrden, tipoVelocidad).setVisible(true);
         this.dispose();
-        
-        
     }//GEN-LAST:event_botonEjecutarActionPerformed
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
@@ -543,7 +542,7 @@ public class Inicio extends javax.swing.JFrame {
         tituloGrafica = cajaTituloGrafica.getText();
 
         if((rutaArchivo != null && tituloGrafica != null) && (!"".equals(rutaArchivo) && !"".equals(tituloGrafica)) ){
-            
+            botonEjecutar.setEnabled(true);
             int contador = 0;
             
             try{

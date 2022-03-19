@@ -601,7 +601,7 @@
                           <StringArray count="3">
                             <StringItem index="0" value="Media"/>
                             <StringItem index="1" value="Lenta"/>
-                            <StringItem index="2" value="R&#xe1;pida"/>
+                            <StringItem index="2" value="Rapida"/>
                           </StringArray>
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -661,6 +661,7 @@
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Hand Cursor"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEjecutarActionPerformed"/>

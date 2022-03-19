@@ -16,7 +16,7 @@ public class Datos {
     private int datoNumerico;
     
     //Arreglo que guardará los datos
-    public static Datos[] arregloDatos = new Datos[300];
+    public static Datos[] arregloDatos = new Datos[100];
     
     public Datos(String datoTexto, int datoNumerico){
         this.datoTexto = datoTexto;
@@ -36,7 +36,7 @@ public class Datos {
         }
     }
     
-    public static void reinicarArreglo(){
+    public static void reiniciarArreglo(){
         for(int i = 0; i < arregloDatos.length; i++){
                 arregloDatos[i] = null;   
         }

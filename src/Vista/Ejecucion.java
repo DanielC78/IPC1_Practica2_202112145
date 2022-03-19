@@ -6,6 +6,7 @@
 package Vista;
 
 import Modelo.Cronometro;
+import Modelo.Ordenamiento;
 
 /**
  *
@@ -20,25 +21,72 @@ public class Ejecucion extends javax.swing.JFrame {
      * @param tipoVelocidad
      */
     
+    //Atributos de la clase
+    private String tipoAlgoritmo, tipoOrdenamiento, tipoVelocidad;
     
     public static boolean verificarOrdenamiento = true;
+    private Ordenamiento ordenamiento;
 
     public Ejecucion(String tipoAlgoritmo, String tipoOrdenamiento, String tipoVelocidad) {
+        
+        this.tipoAlgoritmo = tipoAlgoritmo;
+        this.tipoOrdenamiento = tipoOrdenamiento;
+        this.tipoVelocidad = tipoVelocidad;
         initComponents();
-        mostrarAtributosOrdenamiento(tipoAlgoritmo,tipoOrdenamiento,tipoVelocidad);
         iniciarCronometro();
+        iniciarOrdenamiento();
+        mostrarAtributosOrdenamiento();
         this.setLocationRelativeTo(null);
         this.setTitle("SIMULACIÓN");
         
     }
     
     public Ejecucion(){
+        
     }
     
-        private void iniciarCronometro(){
+    private void mostrarAtributosOrdenamiento(){
+        etiquetaAlgoritmo.setText(this.tipoAlgoritmo);
+        etiquetaTipo.setText(this.tipoOrdenamiento);
+        etiquetaVelocidad.setText(this.tipoVelocidad);
+    }
+    
+    private void iniciarOrdenamiento(){
+        ordenamiento = new Ordenamiento(this.tipoAlgoritmo,this.tipoOrdenamiento,this.tipoVelocidad);
+        ordenamiento.start();
+    }
+    
+    private void iniciarCronometro(){
         Cronometro cronometro = new Cronometro();
         cronometro.start();
-        }
+    }
+
+    public String getTipoAlgoritmo() {
+        return tipoAlgoritmo;
+    }
+
+    public void setTipoAlgoritmo(String tipoAlgoritmo) {
+        this.tipoAlgoritmo = tipoAlgoritmo;
+    }
+
+    public String getTipoOrdenamiento() {
+        return tipoOrdenamiento;
+    }
+
+    public void setTipoOrdenamiento(String tipoOrdenamiento) {
+        this.tipoOrdenamiento = tipoOrdenamiento;
+    }
+
+    public String getTipoVelocidad() {
+        return tipoVelocidad;
+    }
+
+    public void setTipoVelocidad(String tipoVelocidad) {
+        this.tipoVelocidad = tipoVelocidad;
+    }
+    
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,7 +115,7 @@ public class Ejecucion extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         etiquetaTipo = new javax.swing.JLabel();
         etiquetaVelocidad = new javax.swing.JLabel();
-        panelInferior = new javax.swing.JPanel();
+        panelGrafica = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,7 +126,7 @@ public class Ejecucion extends javax.swing.JFrame {
         relleno1.setLayout(relleno1Layout);
         relleno1Layout.setHorizontalGroup(
             relleno1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1092, Short.MAX_VALUE)
+            .addGap(0, 1093, Short.MAX_VALUE)
         );
         relleno1Layout.setVerticalGroup(
             relleno1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +158,7 @@ public class Ejecucion extends javax.swing.JFrame {
         relleno3.setLayout(relleno3Layout);
         relleno3Layout.setHorizontalGroup(
             relleno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1092, Short.MAX_VALUE)
+            .addGap(0, 1093, Short.MAX_VALUE)
         );
         relleno3Layout.setVerticalGroup(
             relleno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +272,7 @@ public class Ejecucion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addComponent(etiquetaVelocidad, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
         contenedorInformacionLayout.setVerticalGroup(
@@ -246,18 +294,18 @@ public class Ejecucion extends javax.swing.JFrame {
 
         panelCentral.add(panelSuperior, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
-        panelInferior.setLayout(panelInferiorLayout);
-        panelInferiorLayout.setHorizontalGroup(
-            panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1042, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelGraficaLayout = new javax.swing.GroupLayout(panelGrafica);
+        panelGrafica.setLayout(panelGraficaLayout);
+        panelGraficaLayout.setHorizontalGroup(
+            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1043, Short.MAX_VALUE)
         );
-        panelInferiorLayout.setVerticalGroup(
-            panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelGraficaLayout.setVerticalGroup(
+            panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 490, Short.MAX_VALUE)
         );
 
-        panelCentral.add(panelInferior, java.awt.BorderLayout.CENTER);
+        panelCentral.add(panelGrafica, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(panelCentral, java.awt.BorderLayout.CENTER);
 
@@ -268,18 +316,15 @@ public class Ejecucion extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     
-    private void mostrarAtributosOrdenamiento(String alg, String tipo, String velocidad){
-        etiquetaAlgoritmo.setText(alg);
-        etiquetaTipo.setText(tipo);
-        etiquetaVelocidad.setText(velocidad);
-    }
+    
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorCronometro;
     private javax.swing.JPanel contenedorInformacion;
     private javax.swing.JLabel etiquetaAlgoritmo;
-    private javax.swing.JLabel etiquetaPasos;
+    public static javax.swing.JLabel etiquetaPasos;
     public static javax.swing.JLabel etiquetaTiempo;
     private javax.swing.JLabel etiquetaTipo;
     private javax.swing.JLabel etiquetaVelocidad;
@@ -289,7 +334,7 @@ public class Ejecucion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panelCentral;
-    private javax.swing.JPanel panelInferior;
+    public static javax.swing.JPanel panelGrafica;
     private javax.swing.JPanel panelSuperior;
     private javax.swing.JPanel relleno1;
     private javax.swing.JPanel relleno2;
