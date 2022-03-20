@@ -25,6 +25,7 @@ public class Cronometro extends Thread{
                 comenzarCronometro();
                 Thread.sleep(1,777777);                
             }
+            Reportes.generarDocHTML();
             
         }catch(Exception e){
             System.out.println("Problemas con el cronómetro "+e.getMessage());

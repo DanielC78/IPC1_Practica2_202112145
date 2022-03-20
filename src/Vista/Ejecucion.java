@@ -7,6 +7,7 @@ package Vista;
 
 import Modelo.Cronometro;
 import Modelo.Ordenamiento;
+import Modelo.Reportes;
 
 /**
  *
@@ -315,11 +316,11 @@ public class Ejecucion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorCronometro;
     private javax.swing.JPanel contenedorInformacion;
-    private javax.swing.JLabel etiquetaAlgoritmo;
+    public static javax.swing.JLabel etiquetaAlgoritmo;
     public static javax.swing.JLabel etiquetaPasos;
     public static javax.swing.JLabel etiquetaTiempo;
-    private javax.swing.JLabel etiquetaTipo;
-    private javax.swing.JLabel etiquetaVelocidad;
+    public static javax.swing.JLabel etiquetaTipo;
+    public static javax.swing.JLabel etiquetaVelocidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;

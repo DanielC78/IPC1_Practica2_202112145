@@ -8,11 +8,15 @@ package Modelo;
 import Vista.Ejecucion;
 import Vista.Inicio;
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -33,11 +37,12 @@ public class Ordenamiento extends Thread{
     public String velocidad;
     
     //Creamos el arreglo tipo datos
-    private final Datos [] arregloDatos = Inicio.arregloDatos;
+    public final static Datos [] arregloDatos = Inicio.arregloDatos;
     private int contador;
     
     //Indice auxilicar para el ordenamiento del arrelgo
     private Datos auxiliar;
+    private int indice = 0;
     
     //Se coloca el tipo de ordenamiento
     private final String ascendente = "Ascendente";
@@ -86,10 +91,24 @@ public class Ordenamiento extends Thread{
     */
     
     public void crearGrafico(){
+        String titulo = "";
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         JFreeChart chart;
         rellenarDataSet(dataSet);
         chart = ChartFactory.createBarChart(Inicio.tituloGrafica, Inicio.titulos[0], Inicio.titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
+        if(contador == 0 || contador == (arregloDatos.length-1)){
+            if(contador == 0){
+                titulo = "imagenInicial.png";
+            } else if(contador == (arregloDatos.length-1)){
+                titulo = "imagenFinal.png";
+            }
+            try{
+                final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+                final File imagen = new File("/Users/daniel/Desktop/USAC PRIMER SEMESTRE 2022/IPC 1/LABORATORIO/PRACTICAS/Practica_2/Imagenes/"+titulo);
+                ChartUtilities.saveChartAsPNG(imagen, chart, 600, 700,info);
+            }catch(Exception e){   
+            }
+        }
         ChartPanel panelDatos = new ChartPanel(chart);
         panelDatos.setMouseWheelEnabled(true);
         Ejecucion.panelGrafica.add(panelDatos,BorderLayout.CENTER);
@@ -137,6 +156,8 @@ public class Ordenamiento extends Thread{
     }
     
     public void metodoBurbuja(){
+        crearGrafico();
+        Reportes.generarEstadoIncial();
         for(int i = 0; i < arregloDatos.length; i++){
             for(int j = 0; j < (arregloDatos.length - 1); j++){
                         crearGrafico();
@@ -153,12 +174,18 @@ public class Ordenamiento extends Thread{
                                 arregloDatos[j+1] = auxiliar;
                         }
             }
+            indice ++;
         }
+        indice--;
+        System.out.println(arregloDatos.length-1);
+        System.out.println(indice);
         crearGrafico();
         Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoSeleccion(){
+        crearGrafico();
+        Reportes.generarEstadoIncial();
         int i,j,pos;
         Datos tmp;
         for(i = 0; i < (arregloDatos.length-1); i++){
@@ -179,12 +206,17 @@ public class Ordenamiento extends Thread{
                 tmp = arregloDatos[i];
                 arregloDatos[i] = arregloDatos[pos];
                 arregloDatos[pos] = tmp;
-        }  
+                indice++;
+        }
+        System.out.println(arregloDatos.length);
+        System.out.println(indice);
         crearGrafico();
         Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoInsercion(){
+        crearGrafico();
+        Reportes.generarEstadoIncial();
         int i,j;
         for(i = 1; i < arregloDatos.length; i++){
                 try {
@@ -199,7 +231,10 @@ public class Ordenamiento extends Thread{
                 arregloDatos[j] = auxiliar;
                 crearGrafico();
                 mostrarPasos();
+                indice++;
         }
+        System.out.println(arregloDatos.length);
+        System.out.println(indice);
         crearGrafico();
         Ejecucion.verificarOrdenamiento = false;
     }
