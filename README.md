@@ -1,4 +1,3 @@
-# IPC1_Practica2_202112145
 # <p align = "center"> G-SORT 770C </p>
 ## <p align = "center" > PRÁCTICA 2 - IPC1 - SECCION C </p>
 
@@ -8,7 +7,7 @@
 
 ### El archivo .jar se encuentra [aquí](https://github.com/DanielC78/IPC1_Practica2_202112145/blob/master/dist/IPC1_Practica2_202112145.jar)
 ### El código fuente se encuentra [aquí](https://github.com/DanielC78/IPC1_Practica2_202112145/tree/master/src)
-### Los manuales se encuentran [aquí](https://github.com/DanielC78/IPC1_Proyecto1_202112145/tree/master/Manuales)
+### Los manuales se encuentran [aquí](https://github.com/DanielC78/IPC1_Practica2_202112145/tree/master/Manuales)
 
 ### Ejecución en la terminal:
 ````
