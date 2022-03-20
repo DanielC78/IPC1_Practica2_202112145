@@ -16,6 +16,8 @@ import java.io.File;
 public class Cronometro extends Thread{
         
     private static int  minutos = 0, segundos = 0, milisegundos = 0;
+    String ceroSegundos = "0";
+    String ceroMinutos = "0";
     
     public Cronometro(){
         
@@ -58,8 +60,14 @@ public class Cronometro extends Thread{
                 segundos = 0;
                 minutos++;
             }
+            if(segundos > 9){
+                ceroSegundos = "";
+            }
+            if(minutos > 9){
+                ceroMinutos = "";
+            }
         }
-        String reloj = minutos + ":" + segundos + ":" + milisegundos;
+        String reloj = ceroMinutos + minutos + ":" + ceroSegundos+segundos + ":" + milisegundos;
         Ejecucion.etiquetaTiempo.setText(reloj);  
     }
     

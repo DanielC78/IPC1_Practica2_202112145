@@ -145,13 +145,13 @@ public class Ordenamiento extends Thread{
     private void establecerVelocidad(){
         switch(velocidad){
             case strRapido:
-                nVelocidad = 250;
-                break;
-            case strMedio:
                 nVelocidad = 500;
                 break;
+            case strMedio:
+                nVelocidad = 1000;
+                break;
             case strLento:
-                nVelocidad = 750;
+                nVelocidad = 1700;
                 break;
         }
     }

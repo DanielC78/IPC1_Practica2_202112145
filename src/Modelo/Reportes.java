@@ -183,7 +183,7 @@ public class Reportes {
 "    }\n" +
 "\n" +
 "    table th {\n" +
-"      font-size: 30px;\n" +
+"      font-size: 26px;\n" +
 "      font-weight: 600;\n" +
 "      color: white;\n" +
 "      background-color: #ea5d4f;\n" +

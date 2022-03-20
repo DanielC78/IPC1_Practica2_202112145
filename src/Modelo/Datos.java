@@ -23,7 +23,6 @@ public class Datos {
     public Datos(){
         
     }
-
     public String getDatoTexto() {
         return datoTexto;
     }
@@ -39,10 +38,4 @@ public class Datos {
     public void setDatoNumerico(int datoNumerico) {
         this.datoNumerico = datoNumerico;
     }
-    
-    
-    
-    
-    
-    
 }
