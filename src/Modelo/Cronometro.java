@@ -6,6 +6,8 @@
 package Modelo;
 
 import Vista.Ejecucion;
+import java.awt.Desktop;
+import java.io.File;
 
 /**
  *
@@ -26,6 +28,7 @@ public class Cronometro extends Thread{
                 Thread.sleep(1,777777);                
             }
             Reportes.generarDocHTML();
+            abrirDocumento();
             
         }catch(Exception e){
             System.out.println("Problemas con el cronómetro "+e.getMessage());
@@ -57,7 +60,17 @@ public class Cronometro extends Thread{
             }
         }
         String reloj = minutos + ":" + segundos + ":" + milisegundos;
-        Ejecucion.etiquetaTiempo.setText(reloj);
-        
+        Ejecucion.etiquetaTiempo.setText(reloj);  
+    }
+    
+    private void abrirDocumento(){
+        if(Desktop.isDesktopSupported()){
+            Desktop desktop = Desktop.getDesktop();
+            try{
+                desktop.open(new File("/Users/daniel/Desktop/USAC PRIMER SEMESTRE 2022/IPC 1/LABORATORIO/PRACTICAS/Practica_2/Reporte-de-ejecucion.html"));
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 }

@@ -42,7 +42,6 @@ public class Ordenamiento extends Thread{
     
     //Indice auxilicar para el ordenamiento del arrelgo
     private Datos auxiliar;
-    private int indice = 0;
     
     //Se coloca el tipo de ordenamiento
     private final String ascendente = "Ascendente";
@@ -90,22 +89,22 @@ public class Ordenamiento extends Thread{
     Creamos un método para crear un dataSet y mostrarlo en pantalla
     */
     
-    public void crearGrafico(){
+    public void crearGrafico(int i){
         String titulo = "";
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         JFreeChart chart;
         rellenarDataSet(dataSet);
         chart = ChartFactory.createBarChart(Inicio.tituloGrafica, Inicio.titulos[0], Inicio.titulos[1], dataSet, PlotOrientation.VERTICAL, true,true,false);
-        if(contador == 0 || contador == (arregloDatos.length-1)){
-            if(contador == 0){
+        if(i == 0 || i == 1){
+            if(i == 0){
                 titulo = "imagenInicial.png";
-            } else if(contador == (arregloDatos.length-1)){
+            } else if(i == 1){
                 titulo = "imagenFinal.png";
             }
-            try{
-                final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
-                final File imagen = new File("/Users/daniel/Desktop/USAC PRIMER SEMESTRE 2022/IPC 1/LABORATORIO/PRACTICAS/Practica_2/Imagenes/"+titulo);
-                ChartUtilities.saveChartAsPNG(imagen, chart, 600, 700,info);
+            try{    
+            final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+            final File imagen = new File("/Users/daniel/Desktop/USAC PRIMER SEMESTRE 2022/IPC 1/LABORATORIO/PRACTICAS/Practica_2/Imagenes/"+titulo);
+            ChartUtilities.saveChartAsPNG(imagen, chart, 600, 700,info);
             }catch(Exception e){   
             }
         }
@@ -135,6 +134,8 @@ public class Ordenamiento extends Thread{
         }
     }
     
+    
+    
     /*
     Se crean los algorimtos de ordenamiento,
     recibiendo como parámetro el tipo de ordenamiento
@@ -156,11 +157,10 @@ public class Ordenamiento extends Thread{
     }
     
     public void metodoBurbuja(){
-        crearGrafico();
+        crearGrafico(0);
         Reportes.generarEstadoIncial();
         for(int i = 0; i < arregloDatos.length; i++){
             for(int j = 0; j < (arregloDatos.length - 1); j++){
-                        crearGrafico();
                         mostrarPasos();
                         try {
                             Thread.sleep(nVelocidad);
@@ -173,18 +173,15 @@ public class Ordenamiento extends Thread{
                                 arregloDatos[j] = arregloDatos[j+1];
                                 arregloDatos[j+1] = auxiliar;
                         }
+                        crearGrafico(2);
             }
-            indice ++;
         }
-        indice--;
-        System.out.println(arregloDatos.length-1);
-        System.out.println(indice);
-        crearGrafico();
+        crearGrafico(1);
         Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoSeleccion(){
-        crearGrafico();
+        crearGrafico(0);
         Reportes.generarEstadoIncial();
         int i,j,pos;
         Datos tmp;
@@ -201,21 +198,18 @@ public class Ordenamiento extends Thread{
                         Logger.getLogger(Ordenamiento.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 mostrarPasos();
-                crearGrafico();
+                crearGrafico(2);
                 }
                 tmp = arregloDatos[i];
                 arregloDatos[i] = arregloDatos[pos];
                 arregloDatos[pos] = tmp;
-                indice++;
         }
-        System.out.println(arregloDatos.length);
-        System.out.println(indice);
-        crearGrafico();
+        crearGrafico(1);
         Ejecucion.verificarOrdenamiento = false;
     }
     
     public void metodoInsercion(){
-        crearGrafico();
+        crearGrafico(0);
         Reportes.generarEstadoIncial();
         int i,j;
         for(i = 1; i < arregloDatos.length; i++){
@@ -229,13 +223,10 @@ public class Ordenamiento extends Thread{
                     arregloDatos[j] = arregloDatos[j-1];
                 }
                 arregloDatos[j] = auxiliar;
-                crearGrafico();
+                crearGrafico(2);
                 mostrarPasos();
-                indice++;
         }
-        System.out.println(arregloDatos.length);
-        System.out.println(indice);
-        crearGrafico();
+        crearGrafico(1);
         Ejecucion.verificarOrdenamiento = false;
     }
     
